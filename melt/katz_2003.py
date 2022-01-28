@@ -24,7 +24,7 @@ def delta_T(X):
     return 43.0*X**0.75
 
 
-def F_dry(P,T,M):
+def F_dry(P,T,M=0.15):
 
     T_s   = T_solidus(P)
     T_l   = T_liquidus(P)
@@ -39,18 +39,17 @@ def F_dry(P,T,M):
         F_opx = F_cpx_out + (1.0 - F_cpx_out)*((T - T_cpx_out)/(T_l - T_cpx_out))**1.5
         F_cpx = ((T - T_s)/(T_lh - T_s))**1.5
 
-    F = F_cpx.copy()
+    F = np.copy(F_cpx)
     F[F > F_cpx_out] = F_opx[F > F_cpx_out]
     return F
 
-def F_wet(P,T,X):
+def F_wet(P,T,X,M=0.15):
     T_s   = T_solidus(P)
     T_l   = T_liquidus(P)
     T_lh  = T_liquidus_lherz(P)
 
     # Evaluate anhydrous melting
     R = R_cpx(P)
-    M = 0.15
     F_cpx_out = M/R
     F_opx = F_dry(P, T, M)
 
