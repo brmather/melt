@@ -26,6 +26,11 @@ def delta_T(X):
 
 def F_dry(P,T,M=0.15):
 
+    # make sure arrays are the same size
+    n = max(np.size(P), np.size(T))
+    P = np.ones(n)*P
+    T = np.ones(n)*T
+
     T_s   = T_solidus(P)
     T_l   = T_liquidus(P)
     T_lh  = T_liquidus_lherz(P)
@@ -44,6 +49,13 @@ def F_dry(P,T,M=0.15):
     return F
 
 def F_wet(P,T,X,M=0.15):
+
+    # make sure arrays are the same size
+    n = max(np.size(P), np.size(T), np.size(X))
+    P = np.ones(n)*P
+    T = np.ones(n)*T
+    X = np.ones(n)*X
+
     T_s   = T_solidus(P)
     T_l   = T_liquidus(P)
     T_lh  = T_liquidus_lherz(P)
