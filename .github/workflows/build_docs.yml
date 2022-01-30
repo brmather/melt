@@ -10,10 +10,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.10
@@ -31,3 +29,8 @@ jobs:
     - name : Generate documentation with pdoc3
       run : |
         pdoc --config latex_math=True --html -o api --force melt
+    - name : Deploy to gh-pages
+      uses: JamesIves/github-pages-deploy-action@v4.2.2
+      with:
+        branch: gh-pages
+        folder: api
